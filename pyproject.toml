@@ -1,0 +1,108 @@
+[tool.codespell]
+builtin = "clear,rare,en-GB_to_en-US"
+skip = "./.git,*.cff,*/tmp,.mypy_cache,env,venv"
+
+
+[tool.mypy]
+allow_redefinition = false
+enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
+warn_unreachable = false
+
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = [
+    "plotly.*",
+    "matplotlib.*",
+    "marimo.*",
+]
+
+[tool.ruff]
+include = ["pyproject.toml", "poia"]
+indent-width = 4
+line-length = 100
+
+[tool.ruff.format]
+docstring-code-format = true
+docstring-code-line-length = "dynamic"
+indent-style = "space"
+line-ending = "auto"
+quote-style = "double"
+skip-magic-trailing-comma = false
+
+[tool.ruff.lint]
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+fixable = ["ALL"]
+ignore = [
+    "B018",
+    "N806",
+    "N803",
+    "N802",
+    "D103",
+    "PD901",
+    "PLR1711",
+    "PLR2004",
+    "RUF001",
+    # https://github.com/astral-sh/ruff/issues/7871
+    # Avoid linter rules conflicting with the formatter
+    # https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules
+    "COM812",
+    "COM819",
+    "D206",
+    "D300",
+    "E111",
+    "E114",
+    "E117",
+    "Q000",
+    "Q001",
+    "Q002",
+    "Q003",
+    "W191"
+]
+# List of all the ruff rules (includes why the rule matters)
+# https://docs.astral.sh/ruff/rules/
+select = [
+    "ARG",
+    "B",
+    "C4",
+    "C90",
+    "D",
+    "E",
+    "ERA",
+    "F",
+    "FLY",
+    "FURB",
+    "I",
+    "N",
+    "NPY",
+    "PERF",
+    "PIE",
+    "PTH",
+    "PD",
+    "PGH",
+    "PLR",
+    "RUF",
+    "SIM",
+    "UP",
+    "W"
+]
+unfixable = []
+
+[tool.ruff.lint.mccabe]
+max-complexity = 29
+
+[tool.ruff.lint.per-file-ignores]
+"notebooks/**/*.py" = ["E501", "E741"]
+"scripts/build.py" = ["E501"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.pylint]
+# https://docs.astral.sh/ruff/settings/#lint_pylint_max-args
+max-args = 15
+# https://docs.astral.sh/ruff/settings/#lint_pylint_max-branches
+max-branches = 33
+# https://docs.astral.sh/ruff/settings/#lint_pylint_max-returns
+max-returns = 10
+# https://docs.astral.sh/ruff/settings/#lint_pylint_max-statements
+max-statements = 80

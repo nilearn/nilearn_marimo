@@ -1,0 +1,36 @@
+.tox
+
+uv.lock
+
+tmp
+
+__pycache__
+
+# Mac OS X
+.DS_Store
+
+# IDE related
+.idea/
+.vscode/
+
+# build related
+build
+dist/
+_version.py
+_site
+
+# notebooks
+.ipynb_checkpoints
+
+# virtual environment
+env/
+venv/
+
+# testing
+.pytest_cache
+
+# coverage
+.coverage
+coverage
+coverage.xml
+nosetests_coverage/

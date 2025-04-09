@@ -1,0 +1,53 @@
+---
+name: test
+
+on:
+    push:
+        branches:
+        -   main
+    pull_request:
+        branches:
+        -   '*'
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+# Force to use color
+env:
+    FORCE_COLOR: true
+
+jobs:
+
+
+    test_and_coverage:
+
+        name: Test with ${{ matrix.py }} on ${{ matrix.os }}
+        runs-on: ${{ matrix.os }}
+        strategy:
+            fail-fast: true
+            matrix:
+                py: ['3.13', '3.12', '3.11']
+                os: [ubuntu-latest]
+        steps:
+        -   uses: actions/checkout@v4
+        -   name: Install the latest version of uv
+            uses: astral-sh/setup-uv@v5
+        -   name: Setup python
+            uses: actions/setup-python@v5
+            with:
+                python-version: ${{ matrix.py }}
+        -   name: Install tox
+            run: uv tool install tox --with=tox-uv --with=tox-gh-actions
+        -   name: Show tox config
+            run: tox c
+        -   name: Run test suite
+            run: |
+                tox run --list-dependencies -e test -- poia/poia.py
+
+        -   name: Upload coverage to CodeCov
+            uses: codecov/codecov-action@v5
+            with:
+                flags: ${{ matrix.os }}_${{ matrix.py }}
+                token: ${{ secrets.CODECOV_TOKEN }}
+            if: success()
