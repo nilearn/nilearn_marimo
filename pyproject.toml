@@ -2,7 +2,6 @@
 builtin = "clear,rare,en-GB_to_en-US"
 skip = "./.git,*.cff,*/tmp,.mypy_cache,env,venv"
 
-
 [tool.mypy]
 allow_redefinition = false
 enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
@@ -14,6 +13,7 @@ module = [
     "plotly.*",
     "matplotlib.*",
     "marimo.*",
+    "nilearn.*"
 ]
 
 [tool.ruff]
@@ -92,7 +92,7 @@ max-complexity = 29
 
 [tool.ruff.lint.per-file-ignores]
 "notebooks/**/*.py" = ["E501", "E741"]
-"scripts/build.py" = ["E501"]
+"scripts/build.py" = ["E501", "PTH118", "PTH103", "PTH123", "PTH120"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"

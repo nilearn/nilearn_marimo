@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Build notebooks into deployable HTML."""
 
 import argparse
 import os

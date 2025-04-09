@@ -3,16 +3,12 @@
 import marimo
 
 __generated_with = "0.12.0"
-app = marimo.App(
-    width="medium",
-    app_title="Intro to Marimo notebooks",
-    layout_file="layouts/mo_intro.slides.json",
-)
+app = marimo.App(width="medium", app_title="Intro to Marimo notebooks")
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(r"""# Marimo notebooks""")
+    mo.md(r"""# Introduction to marimo notebooks""")
     return
 
 
@@ -89,6 +85,8 @@ def _(mo):
         ### Side effect
 
         Variables cannot be redefined.
+
+        Try renaming the following variable from `_a` to `a` and run the cell.
         """
     )
     return
@@ -114,7 +112,7 @@ def _(mo, show_intro_nb):
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(r"""All cells are just function with app.cell()app.cell() decorator.""")
+    mo.md(r"""All cells are just function with `app.cell()` decorator.""")
     return
 
 
@@ -209,7 +207,7 @@ def test_function(function_to_test):
 def _(mo):
     mo.md(
         r"""
-        Name cells that contain a  test_..."test_..." and run pytest on your notebook.
+        Name cells that contain a "test_..." and run pytest on your notebook.
 
         ```bash
         $ pytest notebooks/mo_intro.py
@@ -261,16 +259,17 @@ def _(mo):
 
 
 @app.cell
-def _(mo):
-    import pandas as pd
+def _():
+    from nilearn.glm.tests._testing import  modulated_event_paradigm
 
-    nilearn_repos = pd.read_csv(mo.notebook_location() / "public" / "nilearn_repos.csv")
-    return nilearn_repos, pd
+    events = modulated_event_paradigm()
+    events
+    return events, modulated_event_paradigm
 
 
 @app.cell
-def _(mo, nilearn_repos):
-    transformed_df = mo.ui.dataframe(nilearn_repos)
+def _(events, mo):
+    transformed_df = mo.ui.dataframe(events)
     transformed_df
     return (transformed_df,)
 
@@ -283,86 +282,25 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    options = ["", "extracted_version"]
-    radio = mo.ui.radio(options=options)
-    return options, radio
-
-
-@app.cell(hide_code=True)
-def _(mo, nilearn_repos, plot_repos, radio):
-    repo_fig = plot_repos(nilearn_repos, color=radio.value)
-    repo_fig.show()
-
-    mo.hstack(
-        [
-            mo.vstack([mo.md("color"), radio]),
-        ],
-        align="center",
-    )
-    return (repo_fig,)
+    slider = mo.ui.slider(start=0, stop=7, step=1, label="Thresold", value=2)
+    return (slider,)
 
 
 @app.cell
-def _():
+def _(slider):
+    slider
+    return
+
+
+@app.cell
+def _(slider):
     from nilearn.datasets import load_sample_motor_activation_image
     from nilearn.plotting import view_img
 
     stat_map = load_sample_motor_activation_image()
 
-    view_img(stat_map, threshold=3)
+    view_img(stat_map, threshold=slider.value)
     return load_sample_motor_activation_image, stat_map, view_img
-
-
-@app.cell
-def _(mo):
-    def foo(a):
-        a
-
-    mo.md(
-        r"""
-        ## Qualite of life improvements
-
-        - tab completion
-        - type 'aware'
-        """
-    )
-    return (foo,)
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(
-        r"""
-        ## Personal remarks
-
-        ### ➕
-
-        - impossibility to dynamically reuse variables,
-          nudge users to create functions to encapsulate things
-        - automatic execution of cells that are resource intensive
-          is annoying, so it nudges users to have save data at bottlenecks.
-
-        ### ➖
-
-        - sometimes when stopping a notebook execution,
-          you have to reexcute some cells manually
-          for the notebook execution to continue.
-        """
-    )
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(
-        r"""
-        ## Not mentioned
-
-        - code snippets
-        - deploy to github pages and other places
-        """
-    )
-    return
 
 
 @app.cell
@@ -404,58 +342,6 @@ def _(mo):
     {"`" * 3}"""
         )
     return (show_intro_nb,)
-
-
-@app.cell(hide_code=True)
-def _(pd):
-    import matplotlib.colors as mcolors
-    import matplotlib.pyplot as plt
-    import plotly.express as px
-    from packaging.version import Version
-
-    def plot_repos(df: pd.DataFrame, color: str | None = None):
-        if color == "":
-            color = None
-
-        df.drop_duplicates(subset=["name"])
-        df = df[df["include"]]
-
-        category_orders = None
-        color_map = None
-        if color:
-            df = df.dropna(subset=[color])
-
-            # Sort version labels naturally
-            category_orders = {color: sorted(df[color].unique())}
-            if color == "extracted_version":
-                ordered_versions = sorted(df[color].unique(), key=Version)
-                category_orders = {color: ordered_versions}
-
-                # Get Jet colors for each version using matplotlib
-                cmap = plt.get_cmap("jet", len(ordered_versions))
-                color_map = [mcolors.to_hex(cmap(i)) for i in range(len(ordered_versions))]
-
-        start_date = df["last_commit"].min()
-        end_date = df["last_commit"].max()
-
-        fig = px.histogram(
-            df,
-            x="last_commit",
-            color=color,
-            category_orders=category_orders,
-            color_discrete_sequence=color_map,
-            title=f"Analysis of {len(df)} repositories",
-        )
-
-        fig.update_layout(xaxis_title="Last Commit Date", yaxis_title="Usage Count")
-
-        fig.update_xaxes(tickformat="%Y-%m")
-
-        # Update the x-axis bin size to 3 months
-        fig.update_traces(xbins={"start": start_date, "end": end_date, "size": "M3"})
-
-        return fig
-    return Version, mcolors, plot_repos, plt, px
 
 
 if __name__ == "__main__":
