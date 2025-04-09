@@ -194,6 +194,7 @@ def _(mo):
 def function_to_test():
     def function_to_test(a):
         return a + 1
+
     return (function_to_test,)
 
 
@@ -260,7 +261,7 @@ def _(mo):
 
 @app.cell
 def _():
-    from nilearn.glm.tests._testing import  modulated_event_paradigm
+    from nilearn.glm.tests._testing import modulated_event_paradigm
 
     events = modulated_event_paradigm()
     events
@@ -282,7 +283,7 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    slider = mo.ui.slider(start=0, stop=7, step=1, label="Thresold", value=2)
+    slider = mo.ui.slider(start=0, stop=7, step=1, label="Threshold", value=2)
     return (slider,)
 
 
@@ -341,6 +342,7 @@ def _(mo):
             + f"""
     {"`" * 3}"""
         )
+
     return (show_intro_nb,)
 
 
