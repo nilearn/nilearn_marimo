@@ -8,6 +8,9 @@ on:
     pull_request:
         branches:
         -   '*'
+    schedule:
+    -   cron: 0 8 1 * *
+    workflow_dispatch:
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
@@ -27,7 +30,7 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                py: ['3.13', '3.12', '3.11']
+                py: ['3.13', '3.12', '3.11', '3.10', '3.9']
                 os: [ubuntu-latest]
         steps:
         -   uses: actions/checkout@v4
@@ -43,11 +46,4 @@ jobs:
             run: tox c
         -   name: Run test suite
             run: |
-                tox run --list-dependencies -e test -- poia/poia.py
-
-        -   name: Upload coverage to CodeCov
-            uses: codecov/codecov-action@v5
-            with:
-                flags: ${{ matrix.os }}_${{ matrix.py }}
-                token: ${{ secrets.CODECOV_TOKEN }}
-            if: success()
+                tox run --list-dependencies -e test

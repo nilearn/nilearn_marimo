@@ -9,15 +9,9 @@ warn_unreachable = false
 
 [[tool.mypy.overrides]]
 ignore_missing_imports = true
-module = [
-    "plotly.*",
-    "matplotlib.*",
-    "marimo.*",
-    "nilearn.*"
-]
+module = ["plotly.*", "matplotlib.*", "marimo.*", "nilearn.*"]
 
 [tool.ruff]
-include = ["pyproject.toml", "poia"]
 indent-width = 4
 line-length = 100
 
@@ -30,7 +24,6 @@ quote-style = "double"
 skip-magic-trailing-comma = false
 
 [tool.ruff.lint]
-dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 fixable = ["ALL"]
 ignore = [
     "B018",
@@ -88,7 +81,7 @@ select = [
 unfixable = []
 
 [tool.ruff.lint.mccabe]
-max-complexity = 29
+max-complexity = 15
 
 [tool.ruff.lint.per-file-ignores]
 "notebooks/**/*.py" = ["E501", "E741"]
@@ -101,7 +94,7 @@ convention = "numpy"
 # https://docs.astral.sh/ruff/settings/#lint_pylint_max-args
 max-args = 15
 # https://docs.astral.sh/ruff/settings/#lint_pylint_max-branches
-max-branches = 33
+max-branches = 15
 # https://docs.astral.sh/ruff/settings/#lint_pylint_max-returns
 max-returns = 10
 # https://docs.astral.sh/ruff/settings/#lint_pylint_max-statements

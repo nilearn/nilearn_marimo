@@ -91,7 +91,11 @@ def generate_index(all_notebooks: list[str], output_dir: str) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Build marimo notebooks")
-    parser.add_argument("--output-dir", default="_site", help="Output directory for built files")
+    parser.add_argument(
+        "--output-dir",
+        default="_site",
+        help="Output directory for built files",
+    )
     args = parser.parse_args()
 
     all_notebooks: list[str] = []
