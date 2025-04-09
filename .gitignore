@@ -4,7 +4,9 @@ uv.lock
 
 tmp
 
+# caching
 __pycache__
+nilearn_cache
 
 # Mac OS X
 .DS_Store
@@ -16,9 +18,6 @@ __pycache__
 # build related
 _site
 notebooks.egg-info
-
-# notebooks
-.ipynb_checkpoints
 
 # virtual environment
 env/

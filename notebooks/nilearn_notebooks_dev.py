@@ -2,7 +2,7 @@
 # requires-python = ">=3.9"
 # dependencies = [
 #     "marimo",
-#     "nilearn>=0.11.1",
+#     "git+https://github.com/nilearn/nilearn.git",
 #     "plotly",
 # ]
 # ///
@@ -26,6 +26,20 @@ def _(mo):
         But this can serve as an starting point
         for anyone to start using nilearn
         in a marimo notebook.
+        """
+    )
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(
+        r"""
+        /// attention | running on dev
+
+        This notebook is meant to run on the main branch of nilearn
+
+        ///
         """
     )
     return
@@ -343,7 +357,7 @@ def _():
 
     def fetch_bids_data():
         _, urls = fetch_ds000030_urls()
-    
+
         exclusion_patterns = [
             "*group*",
             "*phenotype*",
@@ -362,9 +376,9 @@ def _():
         urls = select_from_index(
             urls, exclusion_filters=exclusion_patterns, n_subjects=1
         )
-    
+
         data_dir, _ = fetch_openneuro_dataset(urls=urls)
-    
+
         return data_dir
     return (
         fetch_bids_data,
