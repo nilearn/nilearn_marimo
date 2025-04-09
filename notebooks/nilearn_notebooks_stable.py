@@ -2,9 +2,7 @@
 # requires-python = ">=3.9"
 # dependencies = [
 #     "marimo",
-#     "matplotlib",
-#     "nilearn==0.11.1",
-#     "numpy==2.2.4",
+#     "nilearn[plotly]",
 # ]
 # ///
 
