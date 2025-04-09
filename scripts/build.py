@@ -68,7 +68,7 @@ def generate_index(all_notebooks: list[str], output_dir: str) -> None:
     <div class="grid gap-4">
 """
             )
-            for notebook in all_notebooks:
+            for notebook in sorted(all_notebooks):
                 notebook_name = notebook.split("/")[-1].replace(".py", "")
                 display_name = notebook_name.replace("_", " ").title()
 
