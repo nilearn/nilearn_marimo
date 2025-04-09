@@ -59,9 +59,12 @@ def generate_index(all_notebooks: list[str], output_dir: str) -> None:
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   </head>
   <body class="font-sans max-w-2xl mx-auto p-8 leading-relaxed">
-    <div class="mb-8">
-      <img src="https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo-logotype-thick.svg" alt="marimo" class="h-20" />
-    </div>
+  <div class="mb-8 flex">
+    <img src="https://raw.githubusercontent.com/marimo-team/marimo/main/docs/_static/marimo-logotype-thick.svg"
+      alt="marimo" class="h-20 flex-1" />
+    <img src="https://raw.githubusercontent.com/nilearn/nilearn/refs/heads/main/doc/logos/nilearn-logo.svg"
+      alt="marimo" class="h-20 flex-1" />
+  </div>
     <div class="grid gap-4">
 """
             )

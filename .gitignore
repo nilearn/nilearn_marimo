@@ -14,10 +14,8 @@ __pycache__
 .vscode/
 
 # build related
-build
-dist/
-_version.py
 _site
+notebooks.egg-info
 
 # notebooks
 .ipynb_checkpoints
@@ -25,12 +23,3 @@ _site
 # virtual environment
 env/
 venv/
-
-# testing
-.pytest_cache
-
-# coverage
-.coverage
-coverage
-coverage.xml
-nosetests_coverage/
