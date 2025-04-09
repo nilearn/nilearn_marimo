@@ -24,12 +24,12 @@ jobs:
 
     test:
 
-        name: Test with ${{ matrix.py }} on ${{ matrix.os }}
+        name: Test with ${{ matrix.py }} on ${{ matrix.os }} - ${{ matrix.env }}
         runs-on: ${{ matrix.os }}
         strategy:
             fail-fast: false
             matrix:
-                py: ['3.13', '3.12', '3.11', '3.10', '3.9']
+                py: ['3.13', '3.12', '3.11']
                 os: [ubuntu-latest]
                 env: [test, dev]
         steps:
