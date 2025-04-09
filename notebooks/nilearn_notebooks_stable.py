@@ -19,7 +19,7 @@ def _(mo):
         r"""
         # Using nilearn in a marimo notebook
 
-        This notebook is mostly for nilearn developpers
+        This notebook is mostly for nilearn developers
         to make sure nilearn functionalities run well
         in a marimo notebook.
 
@@ -96,6 +96,7 @@ def _(mo):
 @app.cell
 def _(motor_activation_image):
     from nilearn.plotting import view_img
+
     html_fig = view_img(motor_activation_image)
     html_fig
     return html_fig, view_img
@@ -109,11 +110,10 @@ def _(mo):
 
 @app.cell
 def _(mo, motor_activation_image, show):
-    from nilearn.datasets import load_fsaverage
-    from nilearn.surface import SurfaceImage
     import numpy as np
+    from nilearn.datasets import load_fsaverage, load_fsaverage_data
     from nilearn.plotting import plot_surf_stat_map
-    from nilearn.datasets import load_fsaverage_data
+    from nilearn.surface import SurfaceImage
 
     fsaverage_meshes = load_fsaverage()
 
@@ -189,8 +189,8 @@ def _(mo):
 
 @app.cell
 def _(motor_activation_image):
-    from nilearn.maskers import NiftiMasker
     from nilearn.datasets import fetch_development_fmri
+    from nilearn.maskers import NiftiMasker
 
     nifti_masker = NiftiMasker(
         standardize="zscore_sample",
@@ -215,8 +215,8 @@ def _(mo):
 
 @app.cell
 def _(motor_activation_image):
-    from nilearn.maskers import NiftiLabelsMasker
     from nilearn.datasets import fetch_atlas_schaefer_2018
+    from nilearn.maskers import NiftiLabelsMasker
 
     atlas_schaefer_2018 = fetch_atlas_schaefer_2018()
 
@@ -288,9 +288,7 @@ def _(SurfaceImage, fsaverage_meshes, motor_activation_surface_image):
 
     atlas_msdl = fetch_atlas_msdl()
 
-    surf_atlas = SurfaceImage.from_volume(
-        volume_img=atlas_msdl.maps, mesh=fsaverage_meshes["pial"]
-    )
+    surf_atlas = SurfaceImage.from_volume(volume_img=atlas_msdl.maps, mesh=fsaverage_meshes["pial"])
 
     surface_map_masker = SurfaceMapsMasker(surf_atlas).fit()
     surface_map_masker.transform(motor_activation_surface_image)
@@ -339,11 +337,11 @@ def _(mo):
 
 @app.cell
 def _():
-    from nilearn.datasets import fetch_ds000030_urls, select_from_index, fetch_openneuro_dataset
+    from nilearn.datasets import fetch_ds000030_urls, fetch_openneuro_dataset, select_from_index
 
     def fetch_bids_data():
         _, urls = fetch_ds000030_urls()
-    
+
         exclusion_patterns = [
             "*group*",
             "*phenotype*",
@@ -359,13 +357,12 @@ def _():
             "*task-scap*",
             "*task-task*",
         ]
-        urls = select_from_index(
-            urls, exclusion_filters=exclusion_patterns, n_subjects=1
-        )
-    
+        urls = select_from_index(urls, exclusion_filters=exclusion_patterns, n_subjects=1)
+
         data_dir, _ = fetch_openneuro_dataset(urls=urls)
-    
+
         return data_dir
+
     return (
         fetch_bids_data,
         fetch_ds000030_urls,
@@ -397,7 +394,7 @@ def _(fetch_bids_data):
         space_label,
         smoothing_fwhm=5.0,
         derivatives_folder=derivatives_folder,
-        slice_time_ref=0.0
+        slice_time_ref=0.0,
     )
 
     flm = models[0]
@@ -412,12 +409,8 @@ def _(fetch_bids_data):
         / "stopsignal.feat"
         / "design.mat"
     )
-    design_matrices = get_design_from_fslmat(
-        fsl_design_matrix_path, column_names=None
-    )
-    design_columns = [
-        f"cond_{int(i):02}" for i in range(len(design_matrices.columns))
-    ]
+    design_matrices = get_design_from_fslmat(fsl_design_matrix_path, column_names=None)
+    design_columns = [f"cond_{int(i):02}" for i in range(len(design_matrices.columns))]
     design_columns[0] = "Go"
     design_columns[4] = "StopSuccess"
     design_matrices.columns = design_columns
@@ -465,6 +458,7 @@ def _(flm_report):
 @app.cell
 def _():
     import marimo as mo
+
     return (mo,)
 
 

@@ -31,7 +31,7 @@ jobs:
             matrix:
                 py: ['3.13', '3.12', '3.11', '3.10', '3.9']
                 os: [ubuntu-latest]
-                env: ["test", "dev"]
+                env: [test, dev]
         steps:
         -   uses: actions/checkout@v4
         -   name: Install the latest version of uv
@@ -47,5 +47,3 @@ jobs:
         -   name: Run test suite
             run: |
                 tox run --list-dependencies -e ${{ matrix.env }}
-
-
