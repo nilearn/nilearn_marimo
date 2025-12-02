@@ -33,7 +33,7 @@ jobs:
                 os: [ubuntu-latest]
                 env: [test, dev]
         steps:
-        -   uses: actions/checkout@v5
+        -   uses: actions/checkout@v6
         -   name: Install the latest version of uv
             uses: astral-sh/setup-uv@v7
         -   name: Setup python
