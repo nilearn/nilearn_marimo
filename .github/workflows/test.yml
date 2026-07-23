@@ -33,11 +33,11 @@ jobs:
                 os: [ubuntu-latest]
                 env: [test, dev]
         steps:
-        -   uses: actions/checkout@v5
+        -   uses: actions/checkout@v7
         -   name: Install the latest version of uv
             uses: astral-sh/setup-uv@v7
         -   name: Setup python
-            uses: actions/setup-python@v6
+            uses: actions/setup-python@v7
             with:
                 python-version: ${{ matrix.py }}
         -   name: Install tox
